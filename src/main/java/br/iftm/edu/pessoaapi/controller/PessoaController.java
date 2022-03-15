@@ -24,22 +24,22 @@ class PessoaController {
 
     @GetMapping
     public ResponseEntity<List<Pessoa>> recuperaTodosRegistros() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.todos());
+        return ResponseEntity.status(HttpStatus.OK).body(service.todos()); 
     }
 
     @PostMapping
-    public Pessoa criaNovoRegistro(@RequestBody Pessoa pessoa) {
-        return service.novo(pessoa);
+    public ResponseEntity<Pessoa> criaNovoRegistro(@RequestBody Pessoa pessoa) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.novo(pessoa));
     }
 
     @GetMapping("/{id}")
-    public Pessoa buscaUmRegistro(@PathVariable Integer id) {
-        return service.busca(id).orElseThrow(() -> new PessoaNaoEncontradaException(id));
+    public ResponseEntity<Pessoa> buscaUmRegistro(@PathVariable Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.busca(id).orElseThrow(() -> new PessoaNaoEncontradaException(id)));
     }
 
     @PutMapping("/{id}")
-    public Pessoa atualizaRegistro(@RequestBody Pessoa pessoa, @PathVariable Integer id) {
-        return service.atualiza(pessoa, id);
+    public ResponseEntity<Pessoa> atualizaRegistro(@RequestBody Pessoa pessoa, @PathVariable Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.atualiza(pessoa, id));
     }
 
     @DeleteMapping("/{id}")

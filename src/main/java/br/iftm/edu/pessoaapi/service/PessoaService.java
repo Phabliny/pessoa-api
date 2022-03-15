@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.iftm.edu.pessoaapi.controller.PessoaNaoEncontradaException;
 import br.iftm.edu.pessoaapi.domain.Pessoa;
 import br.iftm.edu.pessoaapi.repository.PessoaRepository;
 
@@ -28,9 +29,11 @@ public class PessoaService {
     }
 
     public Pessoa atualiza(Pessoa pessoa, Integer id) {
-        pessoa.setId(id);
-        System.out.println("--------------------> " + pessoa);
-        return repository.save(pessoa);
+        if(repository.existsById(id)) {
+            pessoa.setId(id);
+            return repository.save(pessoa);
+        }
+        throw new PessoaNaoEncontradaException(id);
     }
 
     public void exclui(Integer id) {
